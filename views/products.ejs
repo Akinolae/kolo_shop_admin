@@ -1,0 +1,18 @@
+<form method="POST" action="/products/data" enctype="multipart/form-data">
+  <label for="product type">Choose a product type</label>
+  <select name="product_type" id="product_type">
+    <option selected disabled>choose product type</option>
+    <option value="Shoes">Shoes</option>
+    <option value="Clothes">Clothes</option>
+    <option value="Phones">Phones</option>
+    <option value="Wristwatches">Wristwatches</option>
+    <option value="Bags">Bags</option>
+  </select>
+  <input type="text" id="product_name" name="product_name" required placeholder="enter product name" />
+  <input type="number" name="product_price" id="product_price" required placeholder="input product price" />
+  <input type="file" name="prod_img" id="prod_img">
+  <input type="text" name="product_maker" id="product_maker" required />
+  <input type="submit" value="save product" />
+</form>
+
+<div class="table-wrapper"></div>

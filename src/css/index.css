@@ -1,0 +1,14 @@
+body {
+  background-color: red;
+}
+
+.stock {
+  width: 50%;
+  margin: 20px auto;
+  display: flex;
+}
+
+h5,
+p {
+  padding: 15px;
+}
