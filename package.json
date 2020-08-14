@@ -5,16 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "test": "jest"
   },
   "author": "Akinola Makinde",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.0",
+    "jest": "^26.0.1",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.2",

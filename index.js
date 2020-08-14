@@ -1,43 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const axio = require('axios');
 const multer = require("multer");
 const expressLayout = require("express-ejs-layouts");
 const path = require("path");
 const adminDB = require("./config/dbconn");
-const uuid = require("uuid/v4");
-
-// initialize the storage engine
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-
-// initializing the
-function fileChecker(req, file, cb) {
-  if (
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/gif"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-}
-let upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 10000000,
-  },
-  fileFilter: fileChecker,
-});
 const app = express();
 app.use(express.json());
 app.use(
@@ -46,101 +13,41 @@ app.use(
   })
 );
 app.use(express.static(path.join(__dirname, "/src")));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(expressLayout);
 app.set("view engine", "ejs");
-adminDB.adminDB.connect((err) => {
-  if (err) {
-    console.log("unable to connect");
-  } else {
-    console.log("connected successfully");
-  }
-});
+
+// console.log(adminDB.adm)
+// 
+// axio.get("")
+// .then()
 
 app.get("/", (req, res) => {
   res.render("adminReg");
 });
+
 app.get("/products", (req, res) => {
-  res.render("products");
+  // query the database to display products
+  adminDB.adminDB.query("SELECT * FROM Shoes", (err, result) => {
+    adminDB.adminDB.query("SELECT * FROM Phones", (err, result2) => {
+      adminDB.adminDB.query("SELECT * FROM bags", (err, result3) => {
+        adminDB.adminDB.query("SELECT * FROM Clothes", (err, result4) => {
+          adminDB.adminDB.query("SELECT * FROM wristwatches", (err, result5) => {
+            if (err) throw err;
+            res.render("products", {
+              name: req.user,
+              result,
+              result2,
+              result3,
+              result4,
+              result5,
+            })
+          })
+        })
+      })
+    })
+  });
 });
-app.post("/products/data", upload.single("prod_img"), (req, res) => {
-  const {
-    product_type,
-    product_name,
-    product_price,
-    product_maker
-  } = req.body;
-  const url = "http://localhost:4000/";
-  let shoe = {
-    shoe_name: product_name,
-    shoe_price: product_price,
-    shoe_maker: product_maker,
-    image: url + req.file.path,
-  };
 
-  let clothes = {
-    cloth_name: product_name,
-    cloth_price: product_price,
-    cloth_maker: product_maker,
-    image: url + req.file.path,
-  };
-
-  let phones = {
-    phone_name: product_name,
-    phone_price: product_price,
-    phone_maker: product_maker,
-    image: url + req.file.path,
-  };
-
-  let bags = {
-    bag_name: product_name,
-    bag_price: product_price,
-    bag_maker: product_maker,
-    image: url + req.file.path,
-  };
-
-  let wristwatches = {
-    Wristwatch_name: product_name,
-    Wristwatch_price: product_price,
-    Wristwatch_maker: product_maker,
-    image: url + req.file.path,
-  };
-  if (product_type === "Shoes") {
-    adminDB.adminDB.query("INSERT INTO Shoes SET ?", shoe, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
-  }
-  if (product_type === "Clothes") {
-    adminDB.adminDB.query(
-      "INSERT INTO Clothes SET ?",
-      clothes,
-      (err, result) => {
-        if (err) throw err;
-      }
-    );
-  }
-  if (product_type === "Phones") {
-    adminDB.adminDB.query("INSERT INTO Phones SET ?", phones, (err, result) => {
-      if (err) throw err;
-    });
-  }
-  if (product_type === "Bags") {
-    adminDB.adminDB.query("INSERT INTO Bags SET ?", bags, (err, result) => {
-      if (err) throw err;
-    });
-  }
-  if (product_type === "Wristwatches") {
-    adminDB.adminDB.query(
-      "INSERT INTO Wristwatches  SET ?",
-      wristwatches,
-      (err, result) => {
-        if (err) throw err;
-      }
-    );
-  }
-  res.redirect("/products");
-});
 
 app.get("/product/shoe", (req, res) => {
   adminDB.adminDB.query("SELECT * FROM Shoes", (err, data) => {
@@ -208,5 +115,5 @@ app.get("/product/clothes", (req, res) => {
   });
 });
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 app.listen(port, console.log(`administrator server started on port ${port}`));

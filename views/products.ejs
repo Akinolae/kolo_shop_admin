@@ -1,18 +1,188 @@
-<form method="POST" action="/products/data" enctype="multipart/form-data">
-  <label for="product type">Choose a product type</label>
-  <select name="product_type" id="product_type">
-    <option selected disabled>choose product type</option>
-    <option value="Shoes">Shoes</option>
-    <option value="Clothes">Clothes</option>
-    <option value="Phones">Phones</option>
-    <option value="Wristwatches">Wristwatches</option>
-    <option value="Bags">Bags</option>
-  </select>
-  <input type="text" id="product_name" name="product_name" required placeholder="enter product name" />
-  <input type="number" name="product_price" id="product_price" required placeholder="input product price" />
-  <input type="file" name="prod_img" id="prod_img">
-  <input type="text" name="product_maker" id="product_maker" required />
-  <input type="submit" value="save product" />
-</form>
-
-<div class="table-wrapper"></div>
+<div class="product">
+  <form method="POST" action="http://localhost:4000/products/data" enctype="multipart/form-data">
+  
+    <h4>Add new product</h4><br>
+    <input type="text" id="product_name" name="product_name" required placeholder="enter product name" />
+    <input type="number" name="product_price" id="product_price" required placeholder="input product price" />
+    <input type="file" class="choosefile"name="prod_img" id="prod_img">
+    <input type="text" name="product_maker" id="product_maker" placeholder="enter product maker" required />
+    <label for="product type">Choose a product type</label>
+    <select name="product_type" id="product_type">
+      <option selected disabled>choose product type</option>
+      <option value="Shoes">Shoes</option>
+      <option value="Clothes">Clothes</option>
+      <option value="Phones">Phones</option>
+      <option value="Wristwatches">Wristwatches</option>
+      <option value="Bags">Bags</option>
+    </select>
+    <!-- <input type="submit" value="save product" /> -->
+    <button>save product</button>
+  </form>
+  <!-- Product overview -->
+  <div class="elements">
+    <div>
+      <button id="btn_1">Shoes</button>
+      <h4><%= result.length %></h4>
+    </div>
+    <div>
+      <button id="btn_2">Phones</button>
+      <h4><%= result2.length %></h4>
+    </div>
+    <div>
+      <button id="btn_3">Wristwatches</button>
+      <h4><%= result5.length %></h4>
+    </div>
+    <div>
+      <button id="btn_4">Bags</button>
+      <h4><%= result3.length %></h4>
+    </div>
+    <div>
+      <button id="btn_5">Clothes</button>
+      <h4><%= result4.length %></h4>
+    </div>
+  </div>
+  </div>
+  <!-- The shoe table -->
+  <div id="Shoes" class="table-wrapper shoes">
+    <div>
+      <button id="shoe_close" class="btn btn-danger btn-sm">X</button>
+    </div>
+    <div>
+      <h2>Shoes</h2>
+    </div>
+    <table className="table">
+      <thead className="thead-light">
+        <th scope="col">shoe_id</th>
+        <th scope="col">shoe name</th>
+        <th scope="col">shoe price</th>
+        <th scope="col">maker</th>
+        <th scope="col">product image</th>
+      </thead>
+      <tbody>
+        <tr>
+          <% result.forEach((data)=> { %>
+          <th scope="row"><%= data.shoe_id %></th>
+          <td><%= data.shoe_name %></td>
+          <td><%= data.shoe_price %></td>
+          <td><%= data.shoe_maker %></td>
+          <td><a href=<%= data.image %>><%= data.image %></a></td>
+        </tr>
+      </tbody>
+    </table>
+    <% }) %>
+  </div>
+  <!-- The phone table! -->
+  <div id="phones" class="table-wrapper phones">
+    <div>
+      <button id="phone_close" class="btn btn-danger btn-sm">X</button>
+    </div>
+    <div>
+      <h2>Phones</h2>
+    </div>
+    <table className="table">
+      <thead className="thead-light">
+        <th scope="col">phone_id</th>
+        <th scope="col">phone name</th>
+        <th scope="col">phone price</th>
+        <th scope="col">maker</th>
+        <th scope="col">image</th>
+      </thead>
+      <tbody>
+        <tr>
+          <% result2.forEach((data)=> { %>
+          <th scope="row"><%= data.phone_id %></th>
+          <td><%= data.phone_name %></td>
+          <td><%= data.phone_price %></td>
+          <td><%= data.phone_maker %></td>
+          <td><%= data.image %></td>
+        </tr>
+      </tbody>
+    </table>
+    <% }) %>
+  </div>
+  <div id="watches" class="table-wrapper watches">
+    <div>
+      <button id="watch_close" class="btn btn-danger btn-sm">X</button>
+    </div>
+    <div>
+      <h2>Wristwatches</h2>
+    </div>
+    <table className="table">
+      <thead className="thead-light">
+        <th scope="col">Wristwatch_id</th>
+        <th scope="col">Wristwatch name</th>
+        <th scope="col">Wristwatch price</th>
+        <th scope="col">maker</th>
+        <th scope="col">product image</th>
+      </thead>
+      <tbody>
+        <tr>
+          <% result5.forEach((data)=> { %>
+          <th scope="row"><%= data.Wristwatch_id %></th>
+          <td><%= data.Wristwatch_name %></td>
+          <td><%= data.Wristwatch_price %></td>
+          <td><%= data.Wristwatch_maker %></td>
+          <td><%= data.image %></td>
+        </tr>
+      </tbody>
+    </table>
+    <% }) %>
+  </div>
+  
+  <div id="clothes" class="table-wrapper clothes">
+    <div>
+      <button id="cloth_close" class="btn btn-danger btn-sm">X</button>
+    </div>
+    <div>
+      <h2>Clothes</h2>
+    </div>
+    <table className="table">
+      <thead className="thead-light">
+        <th scope="col">Clothes_id</th>
+        <th scope="col">Clothes name</th>
+        <th scope="col">Clothes price</th>
+        <th scope="col">Clothes maker</th>
+        <th scope="col">Clothes image</th>
+      </thead>
+      <tbody>
+        <% result4.forEach((data)=> { %>
+        <th scope="row"><%= data.cloth_id %></th>
+        <td><%= data.cloth_name %></td>
+        <td><%= data.cloth_price %></td>
+        <td><%= data.cloth_maker %></td>
+        <td><%= data.image %></td>
+        </tr>
+      </tbody>
+    </table>
+    <% }) %>
+  </div>
+  
+  <div id="bags" class="table-wrapper bags">
+    <div>
+      <button id="bag_close" class="btn btn-danger btn-sm">X</button>
+    </div>
+    <div>
+      <h2>Bags</h2>
+    </div>
+    <table className="table">
+      <thead className="thead-light">
+        <th scope="col">Bags_id</th>
+        <th scope="col">Bags name</th>
+        <th scope="col">Bags price</th>
+        <th scope="col">Bags maker</th>
+        <th scope="col">Bags image</th>
+        <th scope="col">update product</th>
+      </thead>
+      <tbody>
+        <% result3.forEach((data)=> { %>
+        <th scope="row"><%= data.bag_id %></th>
+        <td><%= data.bag_name %></td>
+        <td><%= data.bag_price %></td>
+        <td><%= data.bag_maker %></td>
+        <td><%= data.image %></td>
+        <td><a href="http://">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <% }) %>
+  </div>
